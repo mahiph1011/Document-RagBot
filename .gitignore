@@ -1,0 +1,29 @@
+# backend/venv/
+# backend/.env
+
+# frontend/ui/node_modules/
+
+# frontend/ui/.angular/
+
+# frontend/ui/dist/
+
+# __pycache__/
+
+# .vscode/
+
+# Python
+backend/venv/
+backend/.env
+__pycache__/
+
+# Angular
+frontend/ui/node_modules/
+frontend/ui/.angular/
+frontend/ui/dist/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
