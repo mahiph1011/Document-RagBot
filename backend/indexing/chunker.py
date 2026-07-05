@@ -263,6 +263,8 @@ class Chunker:
 
                         "chunk_id": chunk_number,
 
+                        "extension": document.extension,
+
                         "document_name": document.filename,
 
                         "section": current_heading,
@@ -276,6 +278,8 @@ class Chunker:
                         "character_count": len(chunk_text),
 
                         "metadata": document.metadata
+
+                        
 
                     })
 

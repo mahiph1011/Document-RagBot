@@ -210,39 +210,107 @@
 
 
 
-# indexer.py testing 
-from indexing.indexer import Indexer
+# # indexer.py testing 
+# from indexing.indexer import Indexer
 
-indexer = Indexer()
+# indexer = Indexer()
 
-result = indexer.index_document(
+# result = indexer.index_document(
+#     "data/documents/sample.pdf"
+# )
+
+# print()
+
+# print(result)
+
+# print()
+
+# results = indexer.search(
+#     "What is the attendance policy?"
+# )
+
+# print()
+
+# print("=" * 60)
+
+# print("Retrieved Chunks")
+
+# print("=" * 60)
+
+# for item in results:
+
+#     print()
+
+#     print("Score :", round(item["score"], 4))
+
+#     print()
+
+#     print(item["chunk"]["content"][:250])
+
+
+
+
+
+
+
+"""
+test_pdf.py
+
+Debug script for the document parsing and chunking pipeline.
+"""
+
+from pprint import pprint
+
+from services.document_service import DocumentService
+from indexing.chunker import Chunker
+
+print("=" * 80)
+print("Loading document...")
+print("=" * 80)
+
+document_service = DocumentService()
+
+document = document_service.load_document(
     "data/documents/sample.pdf"
 )
 
-print()
+print("\nDocument Loaded Successfully\n")
 
-print(result)
+print("Filename   :", document.filename)
+print("Extension  :", document.extension)
 
-print()
+# If your Document model has these fields
+if hasattr(document, "mime_type"):
+    print("MIME Type  :", document.mime_type)
 
-results = indexer.search(
-    "What is the attendance policy?"
-)
+if hasattr(document, "language"):
+    print("Language   :", document.language)
 
-print()
+if hasattr(document, "word_count"):
+    print("Word Count :", document.word_count())
 
-print("=" * 60)
+print("\n" + "=" * 80)
+print("Chunking Document...")
+print("=" * 80)
 
-print("Retrieved Chunks")
+chunker = Chunker()
 
-print("=" * 60)
+chunks = chunker.split(document)
 
-for item in results:
+print("\nTotal Chunks :", len(chunks))
 
-    print()
+print("\n" + "=" * 80)
+print("FIRST CHUNK DICTIONARY")
+print("=" * 80)
 
-    print("Score :", round(item["score"], 4))
+pprint(chunks[0])
 
-    print()
+print("\n" + "=" * 80)
+print("ALL KEYS IN FIRST CHUNK")
+print("=" * 80)
 
-    print(item["chunk"]["content"][:250])
+print(chunks[0].keys())
+
+print("\n" + "=" * 80)
+print("END")
+print("=" * 80)

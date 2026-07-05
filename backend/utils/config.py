@@ -13,7 +13,9 @@ class Settings(BaseSettings):
 
     APP_VERSION: str = "1.0.0"
 
-    GEMINI_API_KEY: str = ""
+    GEMINI_API_KEY: str 
+
+    GEMINI_MODEL: str = "gemini-2.5-flash"
 
     DOCUMENT_PATH: str = "data/documents"
 
