@@ -1,0 +1,53 @@
+{
+  "title": "Sample Employee Guidelines",
+  "sections": [
+    {
+      "title": "Attendance",
+      "guidelines": [
+        "Working hours: 9:00 AM to 6:00 PM.",
+        "Mark attendance before 9:15 AM.",
+        "Inform your manager if you will be late."
+      ]
+    },
+    {
+      "title": "Work From Home",
+      "guidelines": [
+        "Ensure a stable internet connection.",
+        "Be available during core hours (10:00 AM - 4:00 PM).",
+        "Attend all scheduled meetings.",
+        "Maintain a distraction-free workspace."
+      ]
+    },
+    {
+      "title": "Leave Policy",
+      "guidelines": [
+        "Apply for leave through the HR portal in advance.",
+        "Communicate emergency leave immediately."
+      ]
+    },
+    {
+      "title": "Meeting Etiquette",
+      "guidelines": [
+        "Join meetings on time.",
+        "Mute yourself when not speaking.",
+        "Keep your camera on when requested."
+      ]
+    },
+    {
+      "title": "Security",
+      "guidelines": [
+        "Do not share passwords.",
+        "Lock your device when away.",
+        "Report suspicious emails to the IT team."
+      ]
+    },
+    {
+      "title": "Code of Conduct",
+      "guidelines": [
+        "Treat everyone with respect.",
+        "Follow company policies.",
+        "Maintain confidentiality of company information."
+      ]
+    }
+  ]
+}

@@ -27,3 +27,15 @@ frontend/ui/dist/
 # OS
 .DS_Store
 Thumbs.db
+
+#after backend completion for vectorestore faiss index and stuff
+# Runtime generated files
+data/uploads/*
+!data/uploads/.gitkeep
+
+data/vectorstore/*
+!data/vectorstore/.gitkeep
+
+# Python cache
+__pycache__/
+*.pyc

@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from api.upload import router as upload_router
 
 from api.health import router as health_router
 from utils.config import settings
@@ -28,6 +29,7 @@ app.add_middleware(
 
 # Register Routers
 app.include_router(health_router)
+app.include_router(upload_router)
 
 
 @app.get("/")
