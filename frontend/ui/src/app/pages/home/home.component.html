@@ -1,18 +1,24 @@
 <div class="page">
 
-  <!-- ===================================================== -->
-  <!-- TOP BAR -->
-  <!-- ===================================================== -->
+  <!-- =========================================== -->
+  <!-- TOP NAVIGATION -->
+  <!-- =========================================== -->
 
   <header class="topbar">
 
     <div class="brand">
 
       <div class="logo">
-        🌿
+
+        <mat-icon>
+
+          auto_awesome
+
+        </mat-icon>
+
       </div>
 
-      <span>
+      <span class="brand-title">
 
         Enterprise RAG Assistant
 
@@ -22,25 +28,13 @@
 
     <div class="top-actions">
 
-      <button mat-icon-button>
+      <button
+        class="theme-toggle"
+        (click)="toggleTheme()">
 
         <mat-icon>
 
-          light_mode
-
-        </mat-icon>
-
-      </button>
-
-      <mat-slide-toggle
-        (change)="toggleTheme()">
-      </mat-slide-toggle>
-
-      <button mat-icon-button>
-
-        <mat-icon>
-
-          dark_mode
+          {{ darkMode ? 'light_mode' : 'dark_mode' }}
 
         </mat-icon>
 
@@ -51,9 +45,10 @@
   </header>
 
 
-  <!-- ===================================================== -->
-  <!-- HERO -->
-  <!-- ===================================================== -->
+
+  <!-- =========================================== -->
+  <!-- HERO SECTION -->
+  <!-- =========================================== -->
 
   <section class="hero">
 
@@ -73,16 +68,18 @@
 
     <p>
 
-      Intelligent Question Answering using Retrieval-Augmented Generation
+      Intelligent Question Answering using
+      Retrieval-Augmented Generation
 
     </p>
 
   </section>
 
 
-  <!-- ===================================================== -->
-  <!-- UPLOAD -->
-  <!-- ===================================================== -->
+
+  <!-- =========================================== -->
+  <!-- KNOWLEDGE BASE -->
+  <!-- =========================================== -->
 
   <mat-card class="upload-card">
 
@@ -98,7 +95,7 @@
 
       </div>
 
-      <div>
+      <div class="upload-content">
 
         <h2>
 
@@ -116,6 +113,8 @@
 
     </div>
 
+
+
     <div class="upload-right">
 
       <div
@@ -123,17 +122,17 @@
         (drop)="onDrop($event)"
         (dragover)="onDragOver($event)">
 
-        <mat-icon>
+        <mat-icon class="upload-cloud">
 
           cloud_upload
 
         </mat-icon>
 
-        <p>
+        <h3>
 
-          Drag & Drop files here
+          Drag and Drop files here
 
-        </p>
+        </h3>
 
         <span>
 
@@ -141,7 +140,8 @@
 
         </span>
 
-        <br><br>
+        <br>
+        <br>
 
         <input
           hidden
@@ -155,27 +155,47 @@
           color="primary"
           (click)="uploadedFile ? uploadDocument() : fileInput.click()">
 
+          <mat-icon>
+
+            upload_file
+
+          </mat-icon>
+
           {{ uploadedFile ? 'Upload Document' : 'Choose File' }}
 
         </button>
 
+
+
         <div
           *ngIf="uploadedFile"
-          style="margin-top:18px;">
+          class="selected-file">
 
-          <strong>
+          <mat-icon>
 
-            Selected:
+            insert_drive_file
 
-          </strong>
+          </mat-icon>
 
-          {{ uploadedFile.name }}
+          <span>
+
+            {{ uploadedFile.name }}
+
+          </span>
 
         </div>
 
+
+
         <div
           *ngIf="uploading"
-          style="margin-top:16px; color:#7a67b6;">
+          class="upload-status">
+
+          <mat-icon>
+
+            sync
+
+          </mat-icon>
 
           Uploading document...
 
@@ -188,15 +208,16 @@
   </mat-card>
 
 
-  <!-- ===================================================== -->
-  <!-- CHAT -->
-  <!-- ===================================================== -->
+
+    <!-- =========================================== -->
+  <!-- CHAT SECTION -->
+  <!-- =========================================== -->
 
   <mat-card class="chat-card">
 
     <div class="chat-header">
 
-      <div>
+      <div class="chat-title">
 
         <mat-icon>
 
@@ -213,7 +234,15 @@
       </div>
 
       <button
-        mat-stroked-button>
+        mat-stroked-button
+        class="new-chat-btn"
+        (click)="newChat()">
+
+        <mat-icon>
+
+          add_comment
+
+        </mat-icon>
 
         New Chat
 
@@ -224,11 +253,14 @@
     <mat-divider></mat-divider>
 
 
+
+    <!-- =========================================== -->
     <!-- CHAT WINDOW -->
+    <!-- =========================================== -->
 
     <div class="chat-window">
 
-      <!-- Welcome -->
+      <!-- Welcome State -->
 
       <div
         class="welcome-card"
@@ -236,40 +268,49 @@
 
         <div class="welcome-circle">
 
-          🌿
+          <mat-icon>
+
+            auto_awesome
+
+          </mat-icon>
 
         </div>
 
         <h2>
 
-          Welcome!
+          Welcome to Enterprise RAG Assistant
 
         </h2>
 
         <p>
 
-          Upload your documents and ask questions naturally.
+          Upload enterprise documents and ask questions naturally.
 
         </p>
 
         <p>
 
-          Answers are generated using your uploaded knowledge base.
+          Responses are generated exclusively from your uploaded knowledge base.
 
         </p>
 
       </div>
 
 
-      <!-- Loading -->
+
+      <!-- Loading State -->
 
       <div
         class="welcome-card"
         *ngIf="loading">
 
-        <div class="welcome-circle">
+        <div class="welcome-circle loading-icon">
 
-          ⏳
+          <mat-icon>
+
+            hourglass_top
+
+          </mat-icon>
 
         </div>
 
@@ -281,24 +322,35 @@
 
         <p>
 
-          Retrieving relevant documents...
+          Retrieving relevant information from the knowledge base.
 
         </p>
 
       </div>
 
 
-      <!-- Response -->
+
+      <!-- Answer State
 
       <div
         *ngIf="answer && !loading"
         class="response-container">
 
-        <h2>
+        <div class="response-header">
 
-          Answer
+          <mat-icon>
 
-        </h2>
+            smart_toy
+
+          </mat-icon>
+
+          <span>
+
+            Response
+
+          </span>
+
+        </div>
 
         <p class="answer-text">
 
@@ -306,38 +358,162 @@
 
         </p>
 
-
         <mat-divider></mat-divider>
 
-        <br>
+        <div class="sources-section">
 
-        <h3>
+          <h3>
 
-          Sources
+            Sources
 
-        </h3>
+          </h3>
 
-        <div
-          class="source-card"
-          *ngFor="let source of sources">
+          <div
+            class="source-card"
+            *ngFor="let source of sources">
 
-          <strong>
+            <div class="source-header">
 
-            {{ source.document }}
+              <mat-icon>
 
-          </strong>
+                description
 
-          <br>
+              </mat-icon>
 
-          Section :
+              <strong>
 
-          {{ source.section }}
+                {{ source.document }}
 
-          <br>
+              </strong>
 
-          Similarity :
+            </div>
 
-          {{ source.similarity | number:'1.3-3' }}
+            <div class="source-details">
+
+              <div>
+
+                Section:
+                {{ source.section }}
+
+              </div>
+
+              <div>
+
+                Similarity:
+                {{ source.similarity | number:'1.3-3' }}
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div> -->
+
+
+      <!-- Chat Conversation -->
+
+      <div
+        *ngIf="answer && !loading"
+        class="conversation-container">
+
+        <!-- User Message -->
+
+        <div class="message-row user-row">
+
+          <div class="message-bubble user-bubble">
+
+            {{ currentQuestion }}
+
+          </div>
+
+        </div>
+
+        <!-- Assistant Message -->
+
+        <div class="message-row assistant-row">
+
+          <div class="assistant-avatar">
+
+            <mat-icon>
+
+              smart_toy
+
+            </mat-icon>
+
+          </div>
+
+          <div class="message-content">
+
+            <div class="message-bubble assistant-bubble">
+
+              {{ answer }}
+
+            </div>
+
+            <!-- Sources -->
+
+            <div
+              class="sources-container"
+              *ngIf="sources.length">
+
+              <div class="sources-title">
+
+                <mat-icon>
+
+                  description
+
+                </mat-icon>
+
+                Sources
+
+              </div>
+
+              <div
+                class="source-card"
+                *ngFor="let source of sources">
+
+                <div class="source-header">
+
+                  <mat-icon>
+
+                    description
+
+                  </mat-icon>
+
+                  <span class="source-file">
+
+                    {{ source.document }}
+
+                  </span>
+
+                </div>
+
+                <div class="source-details">
+
+                  <div>
+
+                    Section:
+                    {{ source.section }}
+
+                  </div>
+
+                  <div>
+
+                    Similarity:
+                    {{ source.similarity | number:'1.3-3' }}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
@@ -348,11 +524,16 @@
     <mat-divider></mat-divider>
 
 
-    <!-- INPUT -->
+
+    <!-- =========================================== -->
+    <!-- INPUT AREA -->
+    <!-- =========================================== -->
 
     <div class="chat-input">
 
-      <button mat-icon-button>
+      <button
+        mat-icon-button
+        class="attachment-button">
 
         <mat-icon>
 
@@ -363,19 +544,21 @@
       </button>
 
       <mat-form-field
-        appearance="outline">
+        appearance="outline"
+        class="question-input">
 
         <input
           matInput
           [(ngModel)]="question"
           (keyup.enter)="sendMessage()"
-          placeholder="Ask a question..." />
+          placeholder="Ask a question about your documents..." />
 
       </mat-form-field>
 
       <button
         mat-flat-button
         color="primary"
+        class="send-button"
         (click)="sendMessage()"
         [disabled]="loading">
 
@@ -394,11 +577,12 @@
   </mat-card>
 
 
-  <!-- ===================================================== -->
-  <!-- FOOTER -->
-  <!-- ===================================================== -->
 
-  <footer>
+  <!-- =========================================== -->
+  <!-- FOOTER -->
+  <!-- =========================================== -->
+
+  <footer class="footer">
 
     <span>
 
@@ -426,7 +610,19 @@
 
     <span>
 
-      AI Powered
+      Source Grounded
+
+    </span>
+
+    <span>
+
+      •
+
+    </span>
+
+    <span>
+
+      Enterprise Ready
 
     </span>
 

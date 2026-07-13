@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { ChatService } from '../../services/chat.service';
 import { UploadService } from '../../services/upload.service';
@@ -27,31 +26,30 @@ import { ChatResponse } from '../../models/chat.model';
     MatInputModule,
     MatDividerModule,
     MatFormFieldModule,
-    MatIconModule,
-    MatSlideToggleModule
+    MatIconModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  // ==========================
+  // ==========================================
   // Theme
-  // ==========================
+  // ==========================================
 
   darkMode = false;
 
-  // ==========================
+  // ==========================================
   // Upload
-  // ==========================
+  // ==========================================
 
   uploadedFile: File | null = null;
 
   uploading = false;
 
-  // ==========================
+  // ==========================================
   // Chat
-  // ==========================
+  // ==========================================
 
   question = '';
 
@@ -61,17 +59,34 @@ export class HomeComponent {
 
   sources: any[] = [];
 
+  chatHistory: any[] = [];
+
   constructor(
-
     private chatService: ChatService,
-
     private uploadService: UploadService
-
   ) {}
 
-  // =====================================
+  // ==========================================
+  // INITIALIZATION
+  // ==========================================
+
+  ngOnInit(): void {
+
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+
+      this.darkMode = true;
+
+      document.body.classList.add('dark-theme');
+
+    }
+
+  }
+
+  // ==========================================
   // FILE PICKER
-  // =====================================
+  // ==========================================
 
   onFileSelected(event: Event): void {
 
@@ -85,9 +100,9 @@ export class HomeComponent {
 
   }
 
-  // =====================================
+  // ==========================================
   // DRAG OVER
-  // =====================================
+  // ==========================================
 
   onDragOver(event: DragEvent): void {
 
@@ -95,9 +110,9 @@ export class HomeComponent {
 
   }
 
-  // =====================================
+  // ==========================================
   // DROP FILE
-  // =====================================
+  // ==========================================
 
   onDrop(event: DragEvent): void {
 
@@ -111,15 +126,15 @@ export class HomeComponent {
 
   }
 
-  // =====================================
-  // UPLOAD DOCUMENT
-  // =====================================
+  // ==========================================
+  // DOCUMENT UPLOAD
+  // ==========================================
 
   uploadDocument(): void {
 
     if (!this.uploadedFile) {
 
-      alert('Please choose a document.');
+      alert('Please select a document first.');
 
       return;
 
@@ -127,15 +142,17 @@ export class HomeComponent {
 
     this.uploading = true;
 
-    this.uploadService.uploadDocument(this.uploadedFile).subscribe({
+    this.uploadService.uploadDocument(
+      this.uploadedFile
+    ).subscribe({
 
       next: (response) => {
 
         console.log(response);
 
-        alert('Document uploaded successfully.');
-
         this.uploading = false;
+
+        alert('Document uploaded successfully.');
 
       },
 
@@ -143,9 +160,9 @@ export class HomeComponent {
 
         console.error(error);
 
-        alert('Upload failed.');
-
         this.uploading = false;
+
+        alert('Upload failed.');
 
       }
 
@@ -153,9 +170,11 @@ export class HomeComponent {
 
   }
 
-  // =====================================
+  currentQuestion = '';
+
+  // ==========================================
   // CHAT
-  // =====================================
+  // ==========================================
 
   sendMessage(): void {
 
@@ -165,19 +184,38 @@ export class HomeComponent {
 
     }
 
+    const currentQuestion = this.question;
+
     this.loading = true;
 
     this.answer = '';
 
     this.sources = [];
 
-    this.chatService.askQuestion(this.question).subscribe({
+    this.chatService.askQuestion(
+      currentQuestion
+    ).subscribe({
 
       next: (response: ChatResponse) => {
 
         this.answer = response.answer;
 
         this.sources = response.sources;
+
+        this.chatHistory.push({
+
+          question: currentQuestion,
+
+          answer: response.answer,
+
+          timestamp: new Date()
+
+        });
+
+
+        this.currentQuestion = this.question;
+
+        this.question = '';
 
         this.loading = false;
 
@@ -197,9 +235,9 @@ export class HomeComponent {
 
   }
 
-  // =====================================
+  // ==========================================
   // NEW CHAT
-  // =====================================
+  // ==========================================
 
   newChat(): void {
 
@@ -209,11 +247,13 @@ export class HomeComponent {
 
     this.sources = [];
 
+    this.loading = false;
+
   }
 
-  // =====================================
-  // DARK MODE
-  // =====================================
+  // ==========================================
+  // THEME TOGGLE
+  // ==========================================
 
   toggleTheme(): void {
 
@@ -221,13 +261,25 @@ export class HomeComponent {
 
     if (this.darkMode) {
 
-      document.body.classList.add('dark');
+      document.body.classList.add('dark-theme');
+
+      localStorage.setItem(
+        'theme',
+        'dark'
+      );
 
     }
 
     else {
 
-      document.body.classList.remove('dark');
+      document.body.classList.remove(
+        'dark-theme'
+      );
+
+      localStorage.setItem(
+        'theme',
+        'light'
+      );
 
     }
 
